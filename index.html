@@ -1,0 +1,103 @@
+<html>
+<head runat="server">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <input type="button" onclick="popup1();" value="Show Pop Up 1" />
+        <input type="button" onclick="popup2();" value="Show Pop Up 2" />
+        <input type="button" onclick="popup3();" value="Show With input 3" />
+        <br />
+        <a class="twitter" data-title="Goto Move for free?" href="https://moveforfree.com">Goto
+            Move for free</a>
+    </div>
+    </form>
+    <script type="text/javascript">
+    //function popup4{
+        $('a.twitter').confirm({
+            content: "Click on OK button to go to Moveforfree.com",
+        });
+        $('a.twitter').confirm({
+            buttons: {
+                hey: function(){
+                    location.href = this.$target.attr('href');
+                }
+            }
+        });
+    //}
+    function popup1(){
+         $.alert({
+        title: 'Alert!',
+        content: 'Simple alert!',
+        });
+    };
+
+    function popup3(){
+         $.confirm({
+    title: 'Prompt!',
+    content: '' +
+    '<form action="" class="formName">' +
+    '<div class="form-group">' +
+    '<label>Enter something here</label>' +
+    '<input type="text" placeholder="Your name" class="name form-control" required />' +
+    '</div>' +
+    '</form>',
+    buttons: {
+        formSubmit: {
+            text: 'Submit',
+            btnClass: 'btn-blue',
+            action: function () {
+                var name = this.$content.find('.name').val();
+                if(!name){
+                    $.alert('provide a valid name');
+                    return false;
+                }
+                $.alert('Your name is ' + name);
+            }
+        },
+        cancel: function () {
+            //close
+        },
+    },
+    onContentReady: function () {
+        // bind to events
+        var jc = this;
+        this.$content.find('form').on('submit', function (e) {
+            // if the user submits the form by pressing enter in the field.
+            e.preventDefault();
+            jc.$$formSubmit.trigger('click'); // reference the button and click it
+        });
+    }
+});
+    };
+
+    function popup2(){
+        $.confirm({
+    title: 'Confirm!',
+    content: 'Simple confirm!',
+    buttons: {
+        confirm: function () {
+            $.alert('Confirmed!');
+        },
+        cancel: function () {
+            $.alert('Canceled!');
+        },
+        somethingElse: {
+            text: 'Something else',
+            btnClass: 'btn-blue',
+            keys: ['enter', 'shift'],
+            action: function(){
+                $.alert('Something else?');
+            }
+        }
+    }
+});
+    };
+       
+    </script>
+</body>
+</html>
